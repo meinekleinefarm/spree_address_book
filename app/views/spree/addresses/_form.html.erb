@@ -10,8 +10,8 @@
     </span>
 
   </p>
-  <% elsif field == "state" && Spree::Config[:address_requires_state] %>
-
+  <% elsif field == "state" %>
+    <%  next unless Spree::Config[:address_requires_state] %>
     <p class="field" id=<%="#{address_id}state" %>>
       <% have_states = !address.country.states.empty? %>
       <%= address_form.label :state, t(:state) %><span class='required' id=<%="#{address_id}state-required"%>>*</span><br/>
