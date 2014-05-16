@@ -4,9 +4,13 @@ Spree::Address.class_eval do
   attr_accessible :user_id, :deleted_at
 
   def self.required_fields
-    Spree::Address.validators.map do |v|
+    f = Spree::Address.validators.map do |v|
       v.kind_of?(ActiveModel::Validations::PresenceValidator) ? v.attributes : []
-    end.flatten
+    end
+
+    f.flatten!
+    f.delete(:phone) unless Spree::Address.new.require_phone?
+    f
   end
 
   # TODO: look into if this is actually needed. I don't want to override methods unless it is really needed
@@ -43,4 +47,11 @@ Spree::Address.class_eval do
       update_column :deleted_at, Time.now
     end
   end
+
+  def require_phone?
+    false
+  end
+
+  private
+
 end
