@@ -9,7 +9,7 @@ Spree::Address.class_eval do
     end
 
     f.flatten!
-    f.delete(:phone) unless Spree::Address.new.require_phone?
+    f.delete(:phone) unless Spree::Address.new.send(:require_phone?)
     f
   end
 
@@ -48,10 +48,10 @@ Spree::Address.class_eval do
     end
   end
 
+  private
+
   def require_phone?
     false
   end
-
-  private
 
 end
